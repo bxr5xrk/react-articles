@@ -16,19 +16,16 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
     font-family: sans-serif;
+    background-color: rgb(59, 59, 59);
 }
 ol, ul {
 	list-style: none;
 }
 
 /* PROGECT */
-
 #root{
     display: flex;
-    background-color: rgb(59, 59, 59);
     justify-content: center;
-    height: 100vh;
-    width: 100vw;
     color: aliceblue;
 }
 
