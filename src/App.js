@@ -5,6 +5,7 @@ import Input from "./components/UI/input/Input";
 import "./styles/App.css";
 
 function App() {
+    // list with posts
     const [posts, setPosts] = useState([
         {
             id: 1,
@@ -23,15 +24,19 @@ function App() {
         },
     ]);
 
+    // obgect for new post
     const [post, setPost] = useState({ title: "", desc: "" });
 
     const addNewPost = (e) => {
+        // for disable reload page during the click
         e.preventDefault();
 
-        if (post.title !== '' && post.desc !== '') {
-          setPosts([...posts, {...post, id: Date.now() }]);
+        // checking if title and desc isnt empty
+        if (post.title !== "" && post.desc !== "") {
+            setPosts([{ ...post, id: Date.now() }, ...posts]);
         }
 
+        // clearing input field
         setPost({ title: "", desc: "" });
     };
 
@@ -41,7 +46,7 @@ function App() {
                 <Input
                     value={post.title}
                     onChange={(e) =>
-                        setPost({...post, title: e.target.value })
+                        setPost({ ...post, title: e.target.value })
                     }
                     type="text"
                     placeholder="enter post title"
