@@ -1,3 +1,5 @@
+/* RESET ALL */
+
 * {
 	margin: 0;
 	padding: 0;
@@ -18,6 +20,8 @@ body {
 ol, ul {
 	list-style: none;
 }
+
+/* PROGECT */
 
 #root{
     display: flex;

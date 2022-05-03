@@ -9,7 +9,7 @@ const PostList = ({posts, listTitle}) => {
             {posts.map(post => 
                 <PostItem post={post} key={post.id}/>
             )}
-    </div>
+        </div>
     )
 }
 
