@@ -6,8 +6,8 @@ const PostList = ({posts, listTitle}) => {
     return (
         <div>
             <h1 className='App-title'>{listTitle}</h1>
-            {posts.map(post => 
-                <PostItem post={post} key={post.id}/>
+            {posts.map((post, index) => 
+                <PostItem number={index + 1} post={post} key={post.id}/>
             )}
         </div>
     )
