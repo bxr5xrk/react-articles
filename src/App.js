@@ -1,7 +1,6 @@
 import { useState } from "react";
+import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
-import Button from "./components/UI/button/Button";
-import Input from "./components/UI/input/Input";
 import "./styles/App.css";
 
 function App() {
@@ -24,43 +23,30 @@ function App() {
         },
     ]);
 
-    // obgect for new post
-    const [post, setPost] = useState({ title: "", desc: "" });
+    // output all posts
+    const outputAllPosts = (newPost) => {
+        // adding new post to other posts
+        setPosts([newPost, ...posts]);
+    };
 
-    const addNewPost = (e) => {
-        // for disable reload page during the click
-        e.preventDefault();
-
-        // checking if title and desc isnt empty
-        if (post.title !== "" && post.desc !== "") {
-            setPosts([{ ...post, id: Date.now() }, ...posts]);
-        }
-
-        // clearing input field
-        setPost({ title: "", desc: "" });
+    // delete selected post
+    const deletePost = (post) => {
+        setPosts(posts.filter((p) => p.id !== post.id));
     };
 
     return (
         <div className="App">
-            <form>
-                <Input
-                    value={post.title}
-                    onChange={(e) =>
-                        setPost({ ...post, title: e.target.value })
-                    }
-                    type="text"
-                    placeholder="enter post title"
-                />
-                <Input
-                    type="text"
-                    placeholder="enter post description"
-                    value={post.desc}
-                    onChange={(e) => setPost({ ...post, desc: e.target.value })}
-                />
-                <Button onClick={addNewPost}>New Post</Button>
-            </form>
+            <PostForm create={outputAllPosts} />
 
-            <PostList posts={posts} listTitle="POST LIST" />
+            {posts.length === 0 ? (
+                <div className="not-founded-posts" >No posts yet</div>
+            ) : (
+                <PostList
+                    del={deletePost}
+                    posts={posts}
+                    listTitle="POST LIST"
+                />
+            )}
         </div>
     );
 }
