@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
+import Input from "./components/UI/input/Input";
 import Select from "./components/UI/select/Select";
 import "./styles/App.css";
 
@@ -24,6 +25,13 @@ function App() {
         },
     ]);
     const [selectedSort, setSelectedSort] = useState("");
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const sortedPosts = selectedSort
+        ? [...posts].sort((a, b) =>
+              a[selectedSort].localeCompare(b[selectedSort])
+          )
+        : posts;
 
     // output all posts
     const outputAllPosts = (newPost) => {
@@ -37,13 +45,20 @@ function App() {
     };
 
     const sortPosts = (sort) => {
-        setSelectedSort(sort)
-        setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])))
-    }
+        setSelectedSort(sort);
+    };
 
     return (
         <div className="App">
             <PostForm create={outputAllPosts} />
+
+            <Input
+                type="text"
+                placeholder="search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+            />
+
             <div>
                 <Select
                     defaultValue="Sort by:"
@@ -65,7 +80,7 @@ function App() {
             {posts.length ? (
                 <PostList
                     del={deletePost}
-                    posts={posts}
+                    posts={sortedPosts}
                     listTitle="POST LIST"
                 />
             ) : (
