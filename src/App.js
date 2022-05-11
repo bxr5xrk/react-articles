@@ -1,8 +1,9 @@
 import { useMemo, useState } from "react";
+import PostFilter from "./components/PostFilter";
 import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
-import Input from "./components/UI/input/Input";
-import Select from "./components/UI/select/Select";
+// import Input from "./components/UI/input/Input";
+// import Select from "./components/UI/select/Select";
 import "./styles/App.css";
 
 function App() {
@@ -25,25 +26,17 @@ function App() {
         },
     ]);
 
-    const [selectedSort, setSelectedSort] = useState("");
-    const [searchQuery, setSearchQuery] = useState("");
-
-    // const getSortedPosts = selectedSort
-    //     ? [...posts].sort((a, b) =>
-    //           a[selectedSort].localeCompare(b[selectedSort])
-    //       )
-    //     : posts;
+    const [filter, setFilter] = useState({ sort: "", search: "" });
 
     const sortedPosts = useMemo(() => {
-        console.log("useMemo");
-        if (selectedSort) {
+        if (filter.sort) {
             return [...posts].sort((a, b) =>
-                a[selectedSort].localeCompare(b[selectedSort])
+                a[filter.sort].localeCompare(b[filter.sort])
             );
         } else {
             return posts;
         }
-    }, [selectedSort, posts]);
+    }, [filter.sort, posts]);
 
     // output all posts
     const outputAllPosts = (newPost) => {
@@ -56,55 +49,27 @@ function App() {
         setPosts(posts.filter((p) => p.id !== post.id));
     };
 
-    const sortPosts = (sort) => setSelectedSort(sort);
-
     // sort and search
     const sortedAndSearchedPosts = useMemo(() => {
         return sortedPosts.filter(
             (post) =>
-                post.title.toLowerCase().includes(searchQuery) ||
-                post.desc.toLowerCase().includes(searchQuery)
+                post.title.toLowerCase().includes(filter.search) ||
+                post.desc.toLowerCase().includes(filter.search)
         );
-    }, [searchQuery, sortedPosts]);
+    }, [filter.search, sortedPosts]);
 
     return (
         <div className="App">
             <PostForm create={outputAllPosts} />
 
-            <Input
-                type="text"
-                placeholder="search..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+            <PostFilter filter={filter} setFilter={setFilter} />
+
+            <PostList
+                del={deletePost}
+                posts={sortedAndSearchedPosts}
+                listTitle="POST LIST"
             />
 
-            <div>
-                <Select
-                    defaultValue="Sort by:"
-                    value={selectedSort}
-                    onChange={sortPosts}
-                    options={[
-                        {
-                            value: "title",
-                            name: "by title",
-                        },
-                        {
-                            value: "desc",
-                            name: "by description",
-                        },
-                    ]}
-                />
-            </div>
-
-            {sortedAndSearchedPosts.length ? (
-                <PostList
-                    del={deletePost}
-                    posts={sortedAndSearchedPosts}
-                    listTitle="POST LIST"
-                />
-            ) : (
-                <div className="not-founded-posts">No posts found</div>
-            )}
         </div>
     );
 }

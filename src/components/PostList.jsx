@@ -2,7 +2,9 @@ import React from "react";
 import PostItem from "./PostItem";
 
 const PostList = ({ posts, listTitle, del }) => {
-    return (
+    return !posts.length ? (
+        <div className="not-founded-posts">No posts found</div>
+    ) : (
         <div>
             <h1 className="App-title">{listTitle}</h1>
             {posts.map((post, index) => (
