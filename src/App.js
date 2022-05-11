@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
 import Input from "./components/UI/input/Input";
@@ -24,14 +24,26 @@ function App() {
             desc: "new framework",
         },
     ]);
+
     const [selectedSort, setSelectedSort] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
 
-    const sortedPosts = selectedSort
-        ? [...posts].sort((a, b) =>
-              a[selectedSort].localeCompare(b[selectedSort])
-          )
-        : posts;
+    // const getSortedPosts = selectedSort
+    //     ? [...posts].sort((a, b) =>
+    //           a[selectedSort].localeCompare(b[selectedSort])
+    //       )
+    //     : posts;
+
+    const sortedPosts = useMemo(() => {
+        console.log("useMemo");
+        if (selectedSort) {
+            return [...posts].sort((a, b) =>
+                a[selectedSort].localeCompare(b[selectedSort])
+            );
+        } else {
+            return posts;
+        }
+    }, [selectedSort, posts]);
 
     // output all posts
     const outputAllPosts = (newPost) => {
@@ -44,9 +56,16 @@ function App() {
         setPosts(posts.filter((p) => p.id !== post.id));
     };
 
-    const sortPosts = (sort) => {
-        setSelectedSort(sort);
-    };
+    const sortPosts = (sort) => setSelectedSort(sort);
+
+    // sort and search
+    const sortedAndSearchedPosts = useMemo(() => {
+        return sortedPosts.filter(
+            (post) =>
+                post.title.toLowerCase().includes(searchQuery) ||
+                post.desc.toLowerCase().includes(searchQuery)
+        );
+    }, [searchQuery, sortedPosts]);
 
     return (
         <div className="App">
@@ -77,14 +96,14 @@ function App() {
                 />
             </div>
 
-            {posts.length ? (
+            {sortedAndSearchedPosts.length ? (
                 <PostList
                     del={deletePost}
-                    posts={sortedPosts}
+                    posts={sortedAndSearchedPosts}
                     listTitle="POST LIST"
                 />
             ) : (
-                <div className="not-founded-posts">No posts yet</div>
+                <div className="not-founded-posts">No posts found</div>
             )}
         </div>
     );
