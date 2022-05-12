@@ -7,6 +7,7 @@ import Modal from "./components/UI/modal/Modal";
 import "./styles/App.css";
 
 function App() {
+
     // list with posts
     const [posts, setPosts] = useState([
         {
@@ -26,8 +27,10 @@ function App() {
         },
     ]);
 
+    // for searching and sorting posts
     const [filter, setFilter] = useState({ sort: "", search: "" });
 
+    // sort posts
     const sortedPosts = useMemo(() => {
         if (filter.sort) {
             return [...posts].sort((a, b) =>
@@ -50,7 +53,7 @@ function App() {
         setPosts(posts.filter((p) => p.id !== post.id));
     };
 
-    // sort and search
+    // search in sorted posts
     const sortedAndSearchedPosts = useMemo(() => {
         return sortedPosts.filter(
             (post) =>
@@ -59,6 +62,7 @@ function App() {
         );
     }, [filter.search, sortedPosts]);
 
+    // for active and disable modal window
     const [modal, setModal] = useState(false);
 
     return (
