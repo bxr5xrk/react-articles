@@ -4,7 +4,7 @@ import Select from "./UI/select/Select";
 
 const PostFilter = ({ filter, setFilter }) => {
     return (
-        <div>
+        <div className="search-sort">
             <Input
                 type="text"
                 placeholder="search..."
