@@ -2,8 +2,8 @@ import { useMemo, useState } from "react";
 import PostFilter from "./components/PostFilter";
 import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
-// import Input from "./components/UI/input/Input";
-// import Select from "./components/UI/select/Select";
+import Button from "./components/UI/button/Button";
+import Modal from "./components/UI/modal/Modal";
 import "./styles/App.css";
 
 function App() {
@@ -42,6 +42,7 @@ function App() {
     const outputAllPosts = (newPost) => {
         // adding new post to other posts
         setPosts([newPost, ...posts]);
+        setModal(false);
     };
 
     // delete selected post
@@ -58,11 +59,15 @@ function App() {
         );
     }, [filter.search, sortedPosts]);
 
+    const [modal, setModal] = useState(false);
+
     return (
         <div className="App">
-            <PostForm create={outputAllPosts} />
+            <div className="create-and-filter">
+                <Button onClick={() => setModal(true)}>Create post</Button>
 
-            <PostFilter filter={filter} setFilter={setFilter} />
+                <PostFilter filter={filter} setFilter={setFilter} />
+            </div>
 
             <PostList
                 del={deletePost}
@@ -70,6 +75,9 @@ function App() {
                 listTitle="POST LIST"
             />
 
+            <Modal visible={modal} setVisible={setModal}>
+                <PostForm create={outputAllPosts} />
+            </Modal>
         </div>
     );
 }
