@@ -7,6 +7,7 @@ const PostList = ({ posts, listTitle, del, noPosts }) => {
     ) : (
         <div>
             <h1 className="App-title">{listTitle}</h1>
+
             {posts.map((post, index) => (
                 <PostItem
                     delete={del}
