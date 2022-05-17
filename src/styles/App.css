@@ -36,9 +36,9 @@ ol, ul {
 }
 
 .App-title {
-    font-size: 60px;
+    font-size: 70px;
     text-align: center;
-    margin: 70px 0 30px 0;
+    margin: 70px;
     color: rgb(247, 164, 255);
     text-shadow: 2px 3px 7px rgba(0,0,0,0.69);
 }
@@ -59,7 +59,7 @@ ol, ul {
 }
 
 .not-founded-posts {
-    font-size: 50px;
+    font-size: 70px;
     text-align: center;
     margin: 40px;
     color: rgb(255, 118, 118);
