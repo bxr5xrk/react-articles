@@ -1,13 +1,11 @@
 import { useMemo, useState } from "react";
-import PostFilter from "./components/PostFilter";
+import CreateAndFilter from "./components/CreateAndFilter";
 import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
-import Button from "./components/UI/button/Button";
 import Modal from "./components/UI/modal/Modal";
 import "./styles/App.css";
 
 function App() {
-
     // list with posts
     const [posts, setPosts] = useState([
         {
@@ -62,16 +60,16 @@ function App() {
         );
     }, [filter.search, sortedPosts]);
 
-    // for active and disable modal window
+    // for activate and disable modal window
     const [modal, setModal] = useState(false);
 
     return (
         <div className="App">
-            <div className="create-and-filter">
-                <Button onClick={() => setModal(true)}>Create post</Button>
-
-                <PostFilter filter={filter} setFilter={setFilter} />
-            </div>
+            <CreateAndFilter
+                setModal={setModal}
+                filter={filter}
+                setFilter={setFilter}
+            />
 
             <PostList
                 del={deletePost}
