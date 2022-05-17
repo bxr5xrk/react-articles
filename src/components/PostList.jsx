@@ -1,9 +1,9 @@
 import React from "react";
 import PostItem from "./PostItem";
 
-const PostList = ({ posts, listTitle, del }) => {
+const PostList = ({ posts, listTitle, del, noPosts }) => {
     return !posts.length ? (
-        <div className="not-founded-posts">No posts found</div>
+        <div className="not-founded-posts">{noPosts}</div>
     ) : (
         <div>
             <h1 className="App-title">{listTitle}</h1>

@@ -75,6 +75,7 @@ function App() {
                 del={deletePost}
                 posts={sortedAndSearchedPosts}
                 listTitle="POST LIST"
+                noPosts='No posts found'
             />
 
             <Modal visible={modal} setVisible={setModal}>
