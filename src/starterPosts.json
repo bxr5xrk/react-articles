@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "title": "React",
+        "desc": "React thats the library that helps programmers to write SPA and other sytes"
+    },
+    {
+        "id": 2,
+        "title": "Vue",
+        "desc": "for newbies"
+    },
+    {
+        "id": 3,
+        "title": "Svelte",
+        "desc": "new framework"
+    }
+]
