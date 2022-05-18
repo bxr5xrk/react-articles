@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateAndFilter from "./components/CreateAndFilter";
 import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
@@ -6,7 +6,7 @@ import Modal from "./components/UI/modal/Modal";
 import { usePosts } from "./hooks/usePosts";
 import "./styles/App.css";
 import starterPosts from "./starterPosts.json";
-import axios from "axios";
+import PostService from "./API/PostsService";
 
 function App() {
     // list with posts
@@ -31,10 +31,16 @@ function App() {
     // for activate and disable modal window
     const [modal, setModal] = useState(false);
 
+    // fetch random posts (100)
     async function fetchPosts () {
-        const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
-        setPosts(response.data)
+        const fetchedPosts = await PostService.getPosts()
+        setPosts(fetchedPosts)
     }
+
+    // for display posts from starterPosts.json, comment this lines
+    useEffect(() => {
+        fetchPosts()
+    }, [])
 
     return (
         <div className="App">
@@ -43,7 +49,7 @@ function App() {
                 filter={filter}
                 setFilter={setFilter}
             />
-            <button onClick={fetchPosts} >Get data</button>
+
             <PostList
                 del={deletePost}
                 posts={sortedAndSearchedPosts}
