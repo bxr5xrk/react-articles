@@ -7,6 +7,7 @@ import { usePosts } from "./hooks/usePosts";
 import "./styles/App.css";
 import starterPosts from "./starterPosts.json";
 import PostService from "./API/PostsService";
+import Loader from "./components/UI/loader/Loader";
 
 function App() {
     // list with posts
@@ -15,6 +16,8 @@ function App() {
     // for searching and sorting posts
     const [filter, setFilter] = useState({ sort: "", search: "" });
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.search);
+
+    const [isPostLoading, setIsPostLoading] = useState(false);
 
     // output all posts
     const outputAllPosts = (newPost) => {
@@ -32,15 +35,17 @@ function App() {
     const [modal, setModal] = useState(false);
 
     // fetch random posts (100)
-    async function fetchPosts () {
-        const fetchedPosts = await PostService.getPosts()
-        setPosts(fetchedPosts)
+    async function fetchPosts() {
+        const fetchedPosts = await PostService.getPosts();
+        setPosts(fetchedPosts);
     }
 
     // for display posts from starterPosts.json, comment this lines
     useEffect(() => {
-        fetchPosts()
-    }, [])
+        setIsPostLoading(true);
+        fetchPosts();
+        setIsPostLoading(false);
+    }, []);
 
     return (
         <div className="App">
@@ -50,12 +55,16 @@ function App() {
                 setFilter={setFilter}
             />
 
-            <PostList
-                del={deletePost}
-                posts={sortedAndSearchedPosts}
-                listTitle="POST LIST"
-                noPosts="No posts found"
-            />
+            {isPostLoading ? (
+                <Loader />
+            ) : (
+                <PostList
+                    del={deletePost}
+                    posts={sortedAndSearchedPosts}
+                    listTitle="POST LIST"
+                    noPosts="No posts found"
+                />
+            )}
 
             <Modal visible={modal} setVisible={setModal}>
                 <PostForm create={outputAllPosts} />
