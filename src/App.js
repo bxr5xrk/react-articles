@@ -6,6 +6,7 @@ import Modal from "./components/UI/modal/Modal";
 import { usePosts } from "./hooks/usePosts";
 import "./styles/App.css";
 import starterPosts from "./starterPosts.json";
+import axios from "axios";
 
 function App() {
     // list with posts
@@ -30,6 +31,11 @@ function App() {
     // for activate and disable modal window
     const [modal, setModal] = useState(false);
 
+    async function fetchPosts () {
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
+        setPosts(response.data)
+    }
+
     return (
         <div className="App">
             <CreateAndFilter
@@ -37,7 +43,7 @@ function App() {
                 filter={filter}
                 setFilter={setFilter}
             />
-
+            <button onClick={fetchPosts} >Get data</button>
             <PostList
                 del={deletePost}
                 posts={sortedAndSearchedPosts}

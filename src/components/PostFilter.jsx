@@ -27,7 +27,7 @@ const PostFilter = ({ filter, setFilter }) => {
                             name: "by title",
                         },
                         {
-                            value: "desc",
+                            value: "body",
                             name: "by description",
                         },
                     ]}

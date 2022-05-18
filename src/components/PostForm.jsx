@@ -4,7 +4,7 @@ import Input from "./UI/input/Input";
 
 const PostForm = ({ create }) => {
     // blank for new post
-    const [post, setPost] = useState({ title: "", desc: "" });
+    const [post, setPost] = useState({ title: "", body: "" });
 
     const addNewPost = (e) => {
         // for disable reload page during the click
@@ -17,12 +17,12 @@ const PostForm = ({ create }) => {
         };
 
         // checking if title and desc isnt empty
-        if (post.title !== "" && post.desc !== "") {
+        if (post.title !== "" && post.body !== "") {
             create(newPost);
         }
 
         // clearing input field
-        setPost({ title: "", desc: "" });
+        setPost({ title: "", body: "" });
     };
 
     return (
@@ -36,8 +36,8 @@ const PostForm = ({ create }) => {
             <Input
                 type="text"
                 placeholder="enter post description"
-                value={post.desc}
-                onChange={(e) => setPost({ ...post, desc: e.target.value })}
+                value={post.body}
+                onChange={(e) => setPost({ ...post, body: e.target.value })}
             />
             <Button onClick={addNewPost}>New Post</Button>
         </form>
