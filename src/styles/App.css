@@ -89,3 +89,24 @@ ol, ul {
 .sort-by{
     margin: 20px -10px 18px 20px;
 }
+
+.plagination{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.plagination__page {
+    cursor: pointer;
+    padding: 10px 15px;
+    border: 2px solid rgb(247, 164, 255);
+    border-radius: 10px;
+    background: transparent;
+    color:aliceblue;
+    margin-right: 10px;
+}
+
+.plagination__page-active {
+    background: rgb(247, 164, 255);
+    color: rgb(59, 59, 59);
+}

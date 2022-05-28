@@ -8,6 +8,8 @@ import "./styles/App.css";
 import starterPosts from "./starterPosts.json";
 import PostService from "./API/PostsService";
 import Loader from "./components/UI/loader/Loader";
+import { getPageCount } from "./utils/pages";
+import Plagination from "./components/UI/plagination/Plagination";
 
 function App() {
     // list with posts
@@ -18,6 +20,10 @@ function App() {
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.search);
 
     const [isPostLoading, setIsPostLoading] = useState(true);
+
+    const [totalPages, setTotalPages] = useState(0);
+    const [limitPosts] = useState(10);
+    const [page, setPage] = useState(1);
 
     // output all posts
     const outputAllPosts = (newPost) => {
@@ -34,13 +40,16 @@ function App() {
     // for activate and disable modal window
     const [modal, setModal] = useState(false);
 
-    // fetch random posts (100)
+    // fetch posts (100) from server
     async function fetchPosts() {
-        const fetchedPosts = await PostService.getPosts();
-        setPosts(fetchedPosts);
+        const fetchedPosts = await PostService.getPosts(limitPosts, page);
+        setPosts(fetchedPosts.data);
+
+        const totalPosts = fetchedPosts.headers["x-total-count"];
+        setTotalPages(getPageCount(totalPosts, limitPosts));
     }
 
-    // for display posts from starterPosts.json, comment this lines
+    // for display posts from starterPosts.json, comment this lines and change isPostLoading to true
     useEffect(() => {
         setIsPostLoading(true);
         fetchPosts();
@@ -48,7 +57,11 @@ function App() {
         setTimeout(() => {
             setIsPostLoading(false);
         }, 100);
-    }, []);
+    }, [page]);
+
+    const changePage = (page) => {
+        setPage(page);
+    };
 
     return (
         <div className="App">
@@ -72,6 +85,12 @@ function App() {
             <Modal visible={modal} setVisible={setModal}>
                 <PostForm create={outputAllPosts} />
             </Modal>
+
+            <Plagination
+                totalPages={totalPages}
+                changePage={changePage}
+                page={page}
+            />
         </div>
     );
 }
