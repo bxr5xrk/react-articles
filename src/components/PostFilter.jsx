@@ -17,7 +17,7 @@ const PostFilter = ({ filter, setFilter }) => {
             <p className="sort-by">Sort by: </p>
 
             <Select
-                defaultValue="numbering"
+                defaultValue="last added"
                 value={filter.sort}
                 onChange={(selectedSort) =>
                     setFilter({ ...filter, sort: selectedSort })

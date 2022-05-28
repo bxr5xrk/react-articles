@@ -17,7 +17,7 @@ function App() {
     const [filter, setFilter] = useState({ sort: "", search: "" });
     const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.search);
 
-    const [isPostLoading, setIsPostLoading] = useState(false);
+    const [isPostLoading, setIsPostLoading] = useState(true);
 
     // output all posts
     const outputAllPosts = (newPost) => {
@@ -44,7 +44,10 @@ function App() {
     useEffect(() => {
         setIsPostLoading(true);
         fetchPosts();
-        setIsPostLoading(false);
+
+        setTimeout(() => {
+            setIsPostLoading(false);
+        }, 100);
     }, []);
 
     return (
