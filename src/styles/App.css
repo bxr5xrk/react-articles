@@ -85,3 +85,9 @@ ol, ul {
     align-items: center;
     justify-content: space-between;
 }
+
+.sort-by{
+    margin: 0;
+    margin: 20px -10px 18px 20px;
+
+}

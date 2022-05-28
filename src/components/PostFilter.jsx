@@ -14,25 +14,26 @@ const PostFilter = ({ filter, setFilter }) => {
                 }
             />
 
-            <div>
-                <Select
-                    defaultValue="Sort by:"
-                    value={filter.sort}
-                    onChange={(selectedSort) =>
-                        setFilter({ ...filter, sort: selectedSort })
-                    }
-                    options={[
-                        {
-                            value: "title",
-                            name: "by title",
-                        },
-                        {
-                            value: "body",
-                            name: "by description",
-                        },
-                    ]}
-                />
-            </div>
+            <p className="sort-by">Sort by: </p>
+
+            <Select
+                defaultValue="numbering"
+                value={filter.sort}
+                onChange={(selectedSort) =>
+                    setFilter({ ...filter, sort: selectedSort })
+                }
+                options={[
+                    {
+                        value: "title",
+                        name: "title",
+                    },
+                    {
+                        value: "body",
+                        name: "description",
+                    },
+                ]}
+            />
+
         </div>
     );
 };
