@@ -131,3 +131,17 @@ a {
     font-size: 20px;
     position: fixed;
 }
+
+.not-found {
+    font-size: 100px;
+    width: 100vw;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.not-found-404 {
+    font-size: 200px;
+}
