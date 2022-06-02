@@ -6,6 +6,12 @@ import "./styles/App.css";
 function App() {
     return (
         <BrowserRouter>
+
+            <div className="navbar">
+                <a href="/about" >About</a>
+                <a href="/posts" >Posts</a>
+            </div>
+
             <Routes>
                 <Route path='/about' element={<About />} />
                 <Route path='/posts' element={<Posts />} />
